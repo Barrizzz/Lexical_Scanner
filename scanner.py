@@ -41,7 +41,7 @@ def scan(src):
                 advance()
             id = src[start:i]
             # Recognizing keywords (KEYWORDS)
-            if id in [KEYWORDS]:
+            if id in KEYWORDS:
                 tokens.append(("KEYWORD", id))
             # Else assign it as an identifier (ID)
             else:
