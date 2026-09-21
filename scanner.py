@@ -8,11 +8,11 @@ def scan(src):
         "if", "while", "return", "int", "def", "class", "True", "False", 
         "None", "and", "or", "not", "for", "in", "elif", "else", "break"
     }
-
-    
     SYMBOLS = {
         '+', '-', '*', '/', '=', '>', '<', ';', '(', ')', '==', '!=', '>=', '<=', ':','"', '!'
     }
+
+    # Helper function to advance the index and update line and column numbers
     def advance():
         nonlocal i, col_num, line_num
         if i < len(src):
@@ -77,22 +77,19 @@ def scan(src):
             tokens.append(("SYMBOL", c))
             advance()
             continue
+
         # Ignore if whitespace
         elif c.isspace():
             advance()
             continue
+
         else:
             raise ValueError(f"Line {line_num}, Column {col_num}: Illegal character '{c}'")
     tokens.append(("EOF", None))
-    return tokens
-
-print("1:" + str(scan("xuawdhuh_2q8ho = 23042 + _aiAWodh_y;")))
-print("2:" + str(scan("if (x > .4372) return x;")))
-print("3:" + str(scan("while (x < 10.33427) x = x + 1; //This is a comment\n return x;")))    
-# print("4:" + str(scan("$invalid_token")))
+    return tokens 
 
 source_code = """
-// This is a test script
+// This is a comment, it should ignore this line
 def check_value(x):
     if x >= 3.14:
         return "High"
@@ -100,6 +97,4 @@ def check_value(x):
         return "Low"
 """
 
-print("Scanning expanded source code:\n")
-for token in scan(source_code):
-    print(token)
+print(scan(source_code))
